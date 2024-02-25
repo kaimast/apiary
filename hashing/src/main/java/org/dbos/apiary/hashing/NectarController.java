@@ -1,28 +1,17 @@
 package org.dbos.apiary.hashing;
 
-import com.google.protobuf.InvalidProtocolBufferException;
 import org.dbos.apiary.client.ApiaryWorkerClient;
 import org.dbos.apiary.hashing.functions.NectarHashing;
 import org.dbos.apiary.postgres.PostgresConnection;
 import org.dbos.apiary.utilities.ApiaryConfig;
-import org.dbos.apiary.utilities.Utilities;
 import org.dbos.apiary.worker.ApiaryNaiveScheduler;
 import org.dbos.apiary.worker.ApiaryWorker;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
+import com.google.protobuf.InvalidProtocolBufferException;
+
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
 
 @Controller
 @SessionAttributes("logincredentials")
@@ -48,7 +37,7 @@ public class NectarController {
     }
 
     @GetMapping("/")
-    public RedirectView index(Model model) {
-        return new RedirectView("/home");
+    public void index(@RequestBody HashingArgs args) throws InvalidProtocolBufferException {
+        client.executeFunction("NectarHashing", args.getNumHashes(), args.getInputLen());
     }
 }
