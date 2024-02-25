@@ -1,4 +1,4 @@
-package org.dbos.apiary.hashing;
+package org.dbos.apiary.microbench;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

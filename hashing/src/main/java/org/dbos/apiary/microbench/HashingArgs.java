@@ -1,4 +1,4 @@
-package org.dbos.apiary.hashing;
+package org.dbos.apiary.microbench;
 
 public class HashingArgs {
 	private int numHashes;

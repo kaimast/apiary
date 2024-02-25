@@ -1,4 +1,4 @@
-package org.dbos.apiary.hashing;
+package org.dbos.apiary.microbench;
 
 import org.dbos.apiary.client.ApiaryWorkerClient;
 import org.dbos.apiary.hashing.functions.NectarHashing;
