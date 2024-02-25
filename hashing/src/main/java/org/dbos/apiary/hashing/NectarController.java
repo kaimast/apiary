@@ -14,7 +14,6 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import java.sql.*;
 
 @Controller
-@SessionAttributes("logincredentials")
 public class NectarController {
     private final ApiaryWorkerClient client;
     private final ApiaryWorker worker;
@@ -34,7 +33,7 @@ public class NectarController {
         this.client = new ApiaryWorkerClient("localhost");
     }
 
-    @PostMapping("/")
+    @PostMapping("/hashing")
     public void index(@RequestBody HashingArgs args) throws InvalidProtocolBufferException {
         client.executeFunction("NectarHashing", args.getNumHashes(), args.getInputLen());
     }
