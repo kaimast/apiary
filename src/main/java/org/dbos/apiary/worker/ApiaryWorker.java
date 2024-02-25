@@ -397,7 +397,13 @@ public class ApiaryWorker {
         // TODO: it may be better to add a bound.
         frontend.setHWM(0);
         frontend.setRouterMandatory(true);
-        frontend.bind("tcp://*:" + ApiaryConfig.workerPort);
+
+        try {
+            frontend.bind("tcp://*:" + ApiaryConfig.workerPort);
+        } catch (Exception e) {
+            logger.error("Failed to bind port: " + ApiaryConfig.workerPort);
+            return;
+        }
 
         // This main server thread is used as I/O thread.
         InternalApiaryWorkerClient client = new InternalApiaryWorkerClient(shadowContext);
