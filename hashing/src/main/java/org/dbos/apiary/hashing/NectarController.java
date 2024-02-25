@@ -34,7 +34,7 @@ public class NectarController {
         this.client = new ApiaryWorkerClient("localhost");
     }
 
-    @GetMapping("/")
+    @PostMapping("/")
     public void index(@RequestBody HashingArgs args) throws InvalidProtocolBufferException {
         client.executeFunction("NectarHashing", args.getNumHashes(), args.getInputLen());
     }
