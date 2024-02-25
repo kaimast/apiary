@@ -6,14 +6,13 @@ import org.dbos.apiary.postgres.PostgresConnection;
 import org.dbos.apiary.utilities.ApiaryConfig;
 import org.dbos.apiary.worker.ApiaryNaiveScheduler;
 import org.dbos.apiary.worker.ApiaryWorker;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
 import java.sql.*;
 
-@Controller
+@RestController
 public class NectarController {
     private final ApiaryWorkerClient client;
     private final ApiaryWorker worker;
