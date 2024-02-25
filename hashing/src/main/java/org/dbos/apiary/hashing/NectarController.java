@@ -24,7 +24,6 @@ public class NectarController {
         ApiaryConfig.captureReads = true;
         ApiaryConfig.recordInput = true;
         ApiaryConfig.captureMetadata = true;
-        ApiaryConfig.provenancePort = 5433;  // Store provenance data in Vertica.
 
         PostgresConnection conn = new PostgresConnection("localhost", ApiaryConfig.postgresPort, "postgres", "dbos", ApiaryConfig.vertica, "localhost");
 
