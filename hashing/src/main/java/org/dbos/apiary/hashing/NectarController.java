@@ -25,8 +25,8 @@ public class NectarController {
         ApiaryConfig.provenancePort = 5432;  // Store provenance data in the same database.
 
         PostgresConnection conn = new PostgresConnection("localhost", ApiaryConfig.postgresPort, "postgres", "dbos");
-
-        this.worker = new ApiaryWorker(new ApiaryNaiveScheduler(), 4, ApiaryConfig.vertica, "localhost");
+        
+        this.worker = new ApiaryWorker(new ApiaryNaiveScheduler(), 4, ApiaryConfig.postgres, ApiaryConfig.provenanceDefaultAddress);
         worker.registerConnection(ApiaryConfig.postgres, conn);
         worker.registerFunction("NectarHashing", ApiaryConfig.postgres, NectarHashing::new);
         worker.startServing();
