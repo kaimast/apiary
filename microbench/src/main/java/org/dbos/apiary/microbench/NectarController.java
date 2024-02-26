@@ -21,6 +21,7 @@ public class NectarController {
         ApiaryConfig.captureUpdates = false;
         ApiaryConfig.captureReads = false;
         ApiaryConfig.captureMetadata = false;
+        ApiaryConfig.isolationLevel = ApiaryConfig.SERIALIZABLE;
         ApiaryConfig.provenancePort = 5432;  // Store provenance data in the same database.
 
         PostgresConnection conn = new PostgresConnection("localhost", ApiaryConfig.postgresPort, "postgres", "dbos");
@@ -36,6 +37,6 @@ public class NectarController {
 
     @PostMapping("/hashing")
     public void index(@RequestBody HashingArgs args) throws InvalidProtocolBufferException {
-        client.executeFunction("NectarHashing", args.getNumHashes(), args.getInputLen());
+        client.executeFunction("NectarHashing", args);
     }
 }
