@@ -31,6 +31,8 @@ public class NectarController {
         worker.registerConnection(ApiaryConfig.postgres, conn);
         worker.registerFunction("NectarHashing", ApiaryConfig.postgres, NectarHashing::new);
         worker.startServing();
+        
+        this.client = new ThreadLocal<ApiaryWorkerClient>();
     }
 
     @PostMapping("/hashing")
