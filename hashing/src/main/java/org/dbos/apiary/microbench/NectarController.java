@@ -18,13 +18,15 @@ public class NectarController {
     private final ApiaryWorker worker;
 
     public NectarController() throws SQLException {
-        ApiaryConfig.captureUpdates = true;
-        ApiaryConfig.captureReads = true;
+        ApiaryConfig.captureUpdates = false;
+        ApiaryConfig.captureReads = false;
+        ApiaryConfig.captureMetadata = false;
         ApiaryConfig.provenancePort = 5432;  // Store provenance data in the same database.
 
         PostgresConnection conn = new PostgresConnection("localhost", ApiaryConfig.postgresPort, "postgres", "dbos");
+        int cores = Runtime.getRuntime().availableProcessors();
         
-        this.worker = new ApiaryWorker(new ApiaryNaiveScheduler(), 4, ApiaryConfig.postgres, ApiaryConfig.provenanceDefaultAddress);
+        this.worker = new ApiaryWorker(new ApiaryNaiveScheduler(), cores, ApiaryConfig.postgres, ApiaryConfig.provenanceDefaultAddress);
         worker.registerConnection(ApiaryConfig.postgres, conn);
         worker.registerFunction("NectarHashing", ApiaryConfig.postgres, NectarHashing::new);
         worker.startServing();
