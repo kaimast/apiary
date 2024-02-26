@@ -37,6 +37,6 @@ public class NectarController {
 
     @PostMapping("/hashing")
     public void index(@RequestBody HashingArgs args) throws InvalidProtocolBufferException {
-        client.executeFunction("NectarHashing", args);
+        client.executeFunction("NectarHashing", args.getNumHashes(), args.getInputLen());
     }
 }
