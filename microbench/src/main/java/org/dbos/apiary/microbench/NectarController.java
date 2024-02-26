@@ -14,7 +14,7 @@ import java.sql.*;
 
 @RestController
 public class NectarController {
-    private final ApiaryWorkerClient client;
+    private ThreadLocal<ApiaryWorkerClient> client;
     private final ApiaryWorker worker;
 
     public NectarController() throws SQLException {
@@ -31,12 +31,13 @@ public class NectarController {
         worker.registerConnection(ApiaryConfig.postgres, conn);
         worker.registerFunction("NectarHashing", ApiaryConfig.postgres, NectarHashing::new);
         worker.startServing();
-
-        this.client = new ApiaryWorkerClient("localhost");
     }
 
     @PostMapping("/hashing")
     public void index(@RequestBody HashingArgs args) throws InvalidProtocolBufferException {
-        client.executeFunction("NectarHashing", args.getNumHashes(), args.getInputLen());
+    	if (client.get() == null) {
+    		client.set(new ApiaryWorkerClient("localhost"));
+    	}
+        client.get().executeFunction("NectarHashing", args.getNumHashes(), args.getInputLen());
     }
 }
