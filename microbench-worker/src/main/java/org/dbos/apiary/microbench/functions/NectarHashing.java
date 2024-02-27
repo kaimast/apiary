@@ -1,4 +1,4 @@
-package org.dbos.apiary.hashing.functions;
+package org.dbos.apiary.microbench.functions;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -8,7 +8,7 @@ import org.dbos.apiary.postgres.PostgresContext;
 import org.dbos.apiary.postgres.PostgresFunction;
 
 public class NectarHashing extends PostgresFunction {
-    public static int runFunction(PostgresContext ctxt, Integer numHashes, Integer inputLen) {
+    public static int runFunction(PostgresContext ctxt, int numHashes, int inputLen) {
     	byte[] b = new byte[inputLen];
     	new Random().nextBytes(b);
     	

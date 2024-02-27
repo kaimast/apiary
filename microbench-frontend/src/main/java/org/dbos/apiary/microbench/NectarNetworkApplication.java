@@ -9,5 +9,4 @@ public class NectarNetworkApplication {
     public static void main(String[] args) {
         SpringApplication.run(NectarNetworkApplication.class, args);
     }
-
 }

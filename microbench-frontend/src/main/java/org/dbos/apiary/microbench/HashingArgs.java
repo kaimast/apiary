@@ -4,13 +4,13 @@ public class HashingArgs {
 	private int numHashes;
 	private int inputLen;
 
-	public Integer getNumHashes() {
+	public int getNumHashes() {
 		return numHashes;
 	}
 	public void setNumHashes(int numHashes) {
 		this.numHashes = numHashes;
 	}
-	public Integer getInputLen() {
+	public int getInputLen() {
 		return inputLen;
 	}
 	public void setInputLen(int inputLen) {
