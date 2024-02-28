@@ -3,6 +3,7 @@ package org.dbos.apiary.microbench;
 import java.sql.SQLException;
 
 import org.dbos.apiary.microbench.functions.NectarHashing;
+import org.dbos.apiary.microbench.functions.NectarCreate;
 import org.dbos.apiary.postgres.PostgresConnection;
 import org.dbos.apiary.utilities.ApiaryConfig;
 import org.dbos.apiary.worker.ApiaryNaiveScheduler;
@@ -22,6 +23,7 @@ public class MicrobenchWorker {
         ApiaryWorker worker = new ApiaryWorker(new ApiaryNaiveScheduler(), cores, ApiaryConfig.postgres, ApiaryConfig.provenanceDefaultAddress);
         worker.registerConnection(ApiaryConfig.postgres, conn);
         worker.registerFunction("NectarHashing", ApiaryConfig.postgres, NectarHashing::new);
+        worker.registerFunction("NectarCreate", ApiaryConfig.postgres, NectarCreate::new);
         
         worker.startServing();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
