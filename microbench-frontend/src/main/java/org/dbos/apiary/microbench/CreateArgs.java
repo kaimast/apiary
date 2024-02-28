@@ -1,4 +1,4 @@
-package org.dbos.apiary.readwriteapp.messages;
+package org.dbos.apiary.microbench;
 
 public class CreateArgs {
 
