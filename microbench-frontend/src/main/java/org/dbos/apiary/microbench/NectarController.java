@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.*;
 import com.google.protobuf.InvalidProtocolBufferException;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import java.io.IOException;
+import java.sql.SQLException;
+
 @RestController
 public class NectarController {
     private ThreadLocal<ApiaryWorkerClient> client;
@@ -30,8 +35,8 @@ public class NectarController {
       client.get().executeFunction("NectarHashing", args.getNumHashes(), args.getInputLen());
     }
 
-    @PostMapping("/create")
-    public int index(@RequestBody CreateArgs msg) throws InvalidProtocolBufferException {
+    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public int index(@RequestBody CreateArgs msg) throws IOException {
         if (client.get() == null) {
           client.set(new ApiaryWorkerClient(this.apiaryAddress));
         }
