@@ -13,6 +13,7 @@ public class NectarCreate extends PostgresFunction {
     public static int runFunction(PostgresContext ctxt, int objectId, int numEntries, int entrySize) throws SQLException {
       String value = new String(new char[entrySize]).replace('\0', 'x');
       for ( int i = 0; i < numEntries; i++ ) {
+        System.out.println("Create called!");
         ctxt.executeUpdate(insertKey, objectId, i, value);
       }
       return 0;
