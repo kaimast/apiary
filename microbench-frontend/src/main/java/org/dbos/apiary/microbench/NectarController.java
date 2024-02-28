@@ -35,7 +35,7 @@ public class NectarController {
       client.get().executeFunction("NectarHashing", args.getNumHashes(), args.getInputLen());
     }
 
-    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/create")
     public int index(@RequestBody CreateArgs msg) throws IOException {
         if (client.get() == null) {
           client.set(new ApiaryWorkerClient(this.apiaryAddress));
