@@ -47,7 +47,7 @@ public class NectarController {
         return objectId;
     }
 
-    @PostMapping("/batch_create")
+    @PostMapping("/batch-create")
     public Map<String, List<Integer>> batch_create(@RequestBody BatchCreateArgs msg) throws IOException {
         if (client.get() == null) {
           client.set(new ApiaryWorkerClient(this.apiaryAddress));
