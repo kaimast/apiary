@@ -31,14 +31,18 @@ public class NectarController {
     public NectarController() {
         this.client = new ThreadLocal<ApiaryWorkerClient>();
     }
+    
+    private ApiaryWorkerClient getClient() {
+    	if (client.get() == null) {
+    		client.set(new ApiaryWorkerClient(this.apiaryAddress));
+    	}
+    	return client.get();
+    }
 
     @PostMapping("/hashing")
     @ResponseBody
     public void hashing(@RequestBody HashingArgs args) throws InvalidProtocolBufferException {
-    	if (client.get() == null) {
-    		client.set(new ApiaryWorkerClient(this.apiaryAddress));
-    	}
-      client.get().executeFunction("NectarHashing", args.getNumHashes(), args.getInputLen());
+    	getClient().executeFunction("NectarHashing", args.getNumHashes(), args.getInputLen());
     }
     
     @PostMapping("/create")
@@ -48,7 +52,7 @@ public class NectarController {
           client.set(new ApiaryWorkerClient(this.apiaryAddress));
         }
         String objectId = String.valueOf(counter.incrementAndGet());
-        client.get().executeFunction("NectarCreate", objectId, msg.getNumEntries(), msg.getEntrySize());
+        getClient().executeFunction("NectarCreate", objectId, msg.getNumEntries(), msg.getEntrySize());
         return objectId;
     }
 
@@ -64,7 +68,7 @@ public class NectarController {
         	objectIds[i] = String.valueOf(counter.incrementAndGet());
         }
 
-        client.get().executeFunction("NectarBatchCreate", objectIds, msg.getNumEntries(), msg.getEntrySize());
+        getClient().executeFunction("NectarBatchCreate", objectIds, msg.getNumEntries(), msg.getEntrySize());
         
         Map<String, String[]> result = new HashMap<String, String[]>();
         result.put("objectIds", objectIds);
@@ -75,7 +79,7 @@ public class NectarController {
     @PostMapping("/read-write")
     @ResponseBody
     public void read_write(@RequestBody ReadWriteArgs msg) throws InvalidProtocolBufferException {
-    	client.get().executeFunction("NectarReadWrite", msg.getObjectIds().toArray(),
+    	getClient().executeFunction("NectarReadWrite", msg.getObjectIds().toArray(),
     			msg.getOpsPerObject(), msg.getEntriesPerObject(), msg.getEntrySize());
     }
 }
