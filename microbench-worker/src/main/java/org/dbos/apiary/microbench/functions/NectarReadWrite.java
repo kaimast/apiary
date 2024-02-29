@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.Random;
 
 public class NectarReadWrite extends PostgresFunction {
-	public static final String putEntry = "SELECT Val FROM ObjectStore WHERE ObjectId==? AND Key==?";
-    public static final String getEntry = "INSERT INTO ObjectStore (ObjectId, Key, Val) VALUES (?, ?, ?);";
+	public static final String getEntry = "SELECT Val FROM ObjectStore WHERE ObjectId==? AND Key==?";
+    public static final String putEntry = "INSERT INTO ObjectStore (ObjectId, Key, Val) VALUES (?, ?, ?);";
    
     public static int runFunction(PostgresContext ctxt, String objectId, int opsPerObject,
     		int entriesPerObject, int entrySize, int writeChance) throws SQLException {
