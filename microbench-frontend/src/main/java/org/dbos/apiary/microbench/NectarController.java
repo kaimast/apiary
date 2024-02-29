@@ -2,6 +2,10 @@ package org.dbos.apiary.microbench;
 
 import org.dbos.apiary.client.ApiaryWorkerClient;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
 
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -13,6 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.io.IOException;
 
 @RestController
+@EnableAutoConfiguration(exclude={MongoAutoConfiguration.class, MongoRepositoriesAutoConfiguration.class,MongoDataAutoConfiguration.class})
 public class NectarController {
     private ThreadLocal<ApiaryWorkerClient> client;
 
@@ -28,6 +33,7 @@ public class NectarController {
     }
 
     @PostMapping("/hashing")
+    @ResponseBody
     public void hashing(@RequestBody HashingArgs args) throws InvalidProtocolBufferException {
     	if (client.get() == null) {
     		client.set(new ApiaryWorkerClient(this.apiaryAddress));
@@ -36,6 +42,7 @@ public class NectarController {
     }
     
     @PostMapping("/create")
+    @ResponseBody
     public String create(@RequestBody CreateArgs msg) throws IOException {
         if (client.get() == null) {
           client.set(new ApiaryWorkerClient(this.apiaryAddress));
@@ -46,6 +53,7 @@ public class NectarController {
     }
 
     @PostMapping("/batch-create")
+    @ResponseBody
     public Map<String, String[]> batch_create(@RequestBody BatchCreateArgs msg) throws IOException {
         if (client.get() == null) {
           client.set(new ApiaryWorkerClient(this.apiaryAddress));
@@ -65,6 +73,7 @@ public class NectarController {
     }
     
     @PostMapping("/read_write")
+    @ResponseBody
     public void read_write(@RequestBody ReadWriteArgs msg) throws InvalidProtocolBufferException {
     	client.get().executeFunction("NectarReadWrite", msg.getObjectIds().toArray(),
     			msg.getOpsPerObject(), msg.getEntriesPerObject(), msg.getEntrySize());
