@@ -66,6 +66,7 @@ public class NectarController {
     
     @PostMapping("/read_write")
     public void read_write(@RequestBody ReadWriteArgs msg) throws InvalidProtocolBufferException {
-    	client.get().executeFunction("NectarReadWrite", msg.getObjectIds(), msg.getOpsPerObject(), msg.getEntriesPerObject(), msg.getEntrySize());
+    	client.get().executeFunction("NectarReadWrite", msg.getObjectIds().toArray(),
+    			msg.getOpsPerObject(), msg.getEntriesPerObject(), msg.getEntrySize());
     }
 }
