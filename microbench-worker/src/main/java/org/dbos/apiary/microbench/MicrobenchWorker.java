@@ -2,10 +2,10 @@ package org.dbos.apiary.microbench;
 
 import java.sql.SQLException;
 
-import org.dbos.apiary.microbench.functions.NectarHashing;
-import org.dbos.apiary.microbench.functions.NectarReadWrite;
 import org.dbos.apiary.microbench.functions.NectarBatchCreate;
 import org.dbos.apiary.microbench.functions.NectarCreate;
+import org.dbos.apiary.microbench.functions.NectarHashing;
+import org.dbos.apiary.microbench.functions.NectarReadWrite;
 import org.dbos.apiary.postgres.PostgresConnection;
 import org.dbos.apiary.utilities.ApiaryConfig;
 import org.dbos.apiary.worker.ApiaryNaiveScheduler;
