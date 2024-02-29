@@ -10,11 +10,11 @@ public class NectarReadWrite extends PostgresFunction {
 	public static final String putEntry = "SELECT Val FROM ObjectStore WHERE ObjectId==? AND Key==?";
     public static final String getEntry = "INSERT INTO ObjectStore (ObjectId, Key, Val) VALUES (?, ?, ?);";
    
-    public static int runFunction(PostgresContext ctxt, String[] objectIds, int opsPerObject,
+    public static int runFunction(PostgresContext ctxt, String objectId, int opsPerObject,
     		int entriesPerObject, int entrySize, int writeChance) throws SQLException {
     	Random rand = new Random();
 
-    	for (String objectId : objectIds) {
+    	//for (String objectId : objectIds) {
     		for (int i = 0; i < opsPerObject; ++i) {
     			int key = rand.nextInt(entriesPerObject);
     			int rval = rand.nextInt(100);
@@ -25,8 +25,8 @@ public class NectarReadWrite extends PostgresFunction {
     				ctxt.executeQuery(getEntry, objectId, key);
     			}
     		}
-    	}
+    	//}
     	
     	return 0;
-    }
+    }	
 }
