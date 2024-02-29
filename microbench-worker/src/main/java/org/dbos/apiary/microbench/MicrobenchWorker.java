@@ -21,7 +21,7 @@ public class MicrobenchWorker {
 
         PostgresConnection conn = new PostgresConnection("localhost", ApiaryConfig.postgresPort, "postgres", "dbos");
         conn.dropTable("ObjectStore"); // For testing.
-        conn.createTable("ObjectStore", "ObjectId INT NOT NULL, Key INT NOT NULL, Val TEXT");
+        conn.createTable("ObjectStore", "ObjectId VARCHAR(10) NOT NULL, Key INT NOT NULL, Val TEXT");
 
         int cores = Runtime.getRuntime().availableProcessors();
         
