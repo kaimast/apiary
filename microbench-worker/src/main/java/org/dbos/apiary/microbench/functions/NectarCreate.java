@@ -7,10 +7,10 @@ import java.sql.SQLException;
 
 public class NectarCreate extends PostgresFunction {
     public static final String insertKey = "INSERT INTO ObjectStore (ObjectId, Key, Val) VALUES (?, ?, ?);";
-    public static int runFunction(PostgresContext ctxt, int objectId, int numEntries, int entrySize) throws SQLException {
+    public static int runFunction(PostgresContext ctxt, String objectId, int numEntries, int entrySize) throws SQLException {
       String value = new String(new char[entrySize]).replace('\0', 'x');
-      for ( int i = 0; i < numEntries; i++ ) {
-        ctxt.executeUpdate(insertKey, objectId, i, value);
+      for ( int key = 0; key < numEntries; key++ ) {
+        ctxt.executeUpdate(insertKey, objectId, key, value);
       }
       return 0;
     }

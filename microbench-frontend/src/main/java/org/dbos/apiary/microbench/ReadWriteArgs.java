@@ -3,7 +3,7 @@ package org.dbos.apiary.microbench;
 import java.util.List;
 
 public class ReadWriteArgs {
-    private List<Integer> objectIds;
+    private List<String> objectIds;
     private int opsPerObject;
     private int entriesPerObject;
     private int entrySize;
@@ -15,10 +15,10 @@ public class ReadWriteArgs {
 	public void setOpsPerObject(int opsPerObject) {
 		this.opsPerObject = opsPerObject;
 	}
-	public List<Integer> getObjectIds() {
+	public List<String> getObjectIds() {
 		return objectIds;
 	}
-	public void setObjectIds(List<Integer> objectIds) {
+	public void setObjectIds(List<String> objectIds) {
 		this.objectIds = objectIds;
 	}
 	public int getEntriesPerObject() {

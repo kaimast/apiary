@@ -1,7 +1,6 @@
 package org.dbos.apiary.microbench;
 
 public class CreateArgs {
-
     public void setNumEntries(int numEntries) {
         this.numEntries = numEntries;
     }

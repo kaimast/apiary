@@ -36,29 +36,29 @@ public class NectarController {
     }
     
     @PostMapping("/create")
-    public int create(@RequestBody CreateArgs msg) throws IOException {
+    public String create(@RequestBody CreateArgs msg) throws IOException {
         if (client.get() == null) {
           client.set(new ApiaryWorkerClient(this.apiaryAddress));
         }
-        int objectId = counter.incrementAndGet();
+        String objectId = String.valueOf(counter.incrementAndGet());
         client.get().executeFunction("NectarCreate", objectId, msg.getNumEntries(), msg.getEntrySize());
         return objectId;
     }
 
     @PostMapping("/batch-create")
-    public Map<String, int[]> batch_create(@RequestBody BatchCreateArgs msg) throws IOException {
+    public Map<String, String[]> batch_create(@RequestBody BatchCreateArgs msg) throws IOException {
         if (client.get() == null) {
           client.set(new ApiaryWorkerClient(this.apiaryAddress));
         }
         
-        int[] objectIds = new int[msg.getNumObjects()];
+        String[] objectIds = new String[msg.getNumObjects()];
         for (int i = 0; i < msg.getNumObjects(); ++i) {
-        	objectIds[i] = counter.incrementAndGet();
+        	objectIds[i] = String.valueOf(counter.incrementAndGet());
         }
-        
+
         client.get().executeFunction("NectarBatchCreate", objectIds, msg.getNumEntries(), msg.getEntrySize());
         
-        Map<String, int[]> result = new HashMap<String, int[]>();
+        Map<String, String[]> result = new HashMap<String, String[]>();
         result.put("objectIds", objectIds);
         
         return result;
