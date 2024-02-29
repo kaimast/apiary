@@ -9,8 +9,8 @@
 	<description>Worker/Backend for the Microbenchmarks</description>
 	<properties>
 		<java.version>11</java.version>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -18,15 +18,10 @@
 			<artifactId>apiary</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
-
 	</dependencies>
 
 	<build>
 		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-install-plugin</artifactId>
@@ -37,7 +32,6 @@
 						<phase>clean</phase>
 						<configuration>
 							<file>../target/apiary-0.0.1-SNAPSHOT.jar</file>
-							<repositoryLayout>default</repositoryLayout>
 							<groupId>org.dbos.apiary</groupId>
 							<artifactId>apiary</artifactId>
 							<version>0.0.1-SNAPSHOT</version>
@@ -67,10 +61,10 @@
 						<configuration>
 							<archive>
 								<manifest>
-									<mainClass>org.dbos.apiary.rsademo.executable.DemoExecutable</mainClass>
+									<mainClass>org.dbos.apiary.microbench.MicrobenchWorker</mainClass>
 								</manifest>
 							</archive>
-							<finalName>demo-exec</finalName>
+							<finalName>microbench-worker</finalName>
 						</configuration>
 					</execution>
 				</executions>
