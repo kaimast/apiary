@@ -6,9 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -48,18 +46,19 @@ public class NectarController {
     }
 
     @PostMapping("/batch-create")
-    public Map<String, List<Integer>> batch_create(@RequestBody BatchCreateArgs msg) throws IOException {
+    public Map<String, int[]> batch_create(@RequestBody BatchCreateArgs msg) throws IOException {
         if (client.get() == null) {
           client.set(new ApiaryWorkerClient(this.apiaryAddress));
         }
-        List<Integer> objectIds = new ArrayList<Integer>();
+        
+        int[] objectIds = new int[msg.getNumObjects()];
         for (int i = 0; i < msg.getNumObjects(); ++i) {
-        	objectIds.add(counter.incrementAndGet());
+        	objectIds[i] = counter.incrementAndGet();
         }
         
         client.get().executeFunction("NectarBatchCreate", objectIds, msg.getNumEntries(), msg.getEntrySize());
         
-        Map<String, List<Integer>> result = new HashMap<String, List<Integer>>();
+        Map<String, int[]> result = new HashMap<String, int[]>();
         result.put("objectIds", objectIds);
         
         return result;
