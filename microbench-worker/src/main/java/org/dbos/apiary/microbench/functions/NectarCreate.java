@@ -3,10 +3,7 @@ package org.dbos.apiary.microbench.functions;
 import org.dbos.apiary.postgres.PostgresContext;
 import org.dbos.apiary.postgres.PostgresFunction;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.PreparedStatement;
-import java.sql.Array;
 
 public class NectarCreate extends PostgresFunction {
     public static final String insertKey = "INSERT INTO ObjectStore (ObjectId, Key, Val) VALUES (?, ?, ?);";

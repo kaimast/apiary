@@ -5,12 +5,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import com.google.protobuf.InvalidProtocolBufferException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import java.io.IOException;
-import java.sql.SQLException;
 
 @RestController
 public class NectarController {
@@ -28,20 +30,43 @@ public class NectarController {
     }
 
     @PostMapping("/hashing")
-    public void index(@RequestBody HashingArgs args) throws InvalidProtocolBufferException {
+    public void hashing(@RequestBody HashingArgs args) throws InvalidProtocolBufferException {
     	if (client.get() == null) {
     		client.set(new ApiaryWorkerClient(this.apiaryAddress));
     	}
       client.get().executeFunction("NectarHashing", args.getNumHashes(), args.getInputLen());
     }
-
+    
     @PostMapping("/create")
-    public int index(@RequestBody CreateArgs msg) throws IOException {
+    public int create(@RequestBody CreateArgs msg) throws IOException {
         if (client.get() == null) {
           client.set(new ApiaryWorkerClient(this.apiaryAddress));
         }
         int objectId = counter.incrementAndGet();
         client.get().executeFunction("NectarCreate", objectId, msg.getNumEntries(), msg.getEntrySize());
         return objectId;
+    }
+
+    @PostMapping("/batch_create")
+    public Map<String, List<Integer>> batch_create(@RequestBody BatchCreateArgs msg) throws IOException {
+        if (client.get() == null) {
+          client.set(new ApiaryWorkerClient(this.apiaryAddress));
+        }
+        List<Integer> objectIds = new ArrayList<Integer>();
+        for (int i = 0; i < msg.getNumObjects(); ++i) {
+        	objectIds.add(counter.incrementAndGet());
+        }
+        
+        client.get().executeFunction("NectarBatchCreate", objectIds, msg.getNumEntries(), msg.getEntrySize());
+        
+        Map<String, List<Integer>> result = new HashMap<String, List<Integer>>();
+        result.put("objectIds", objectIds);
+        
+        return result;
+    }
+    
+    @PostMapping("/read_write")
+    public void read_write(@RequestBody ReadWriteArgs msg) throws InvalidProtocolBufferException {
+    	client.get().executeFunction("NectarReadWrite", msg.getObjectIds(), msg.getOpsPerObject(), msg.getEntriesPerObject(), msg.getEntrySize());
     }
 }
