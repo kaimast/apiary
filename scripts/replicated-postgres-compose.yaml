@@ -50,5 +50,3 @@ services:
       chmod 0700 /var/lib/postgresql/data
       postgres
       "
-    depends_on:
-      - postgres_primary
