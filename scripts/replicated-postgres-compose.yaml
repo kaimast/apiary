@@ -29,7 +29,7 @@ services:
       -c max_replication_slots=10 
       -c hot_standby_feedback=on
     volumes:
-      - ${SCRIPT_DIR}/replicated-postgres-init.sql:/docker-entrypoint-initdb.d/00_init.sql
+      - /workdir/apiary/scripts/replicated-postgres-init.sql:/docker-entrypoint-initdb.d/00_init.sql
 
   postgres_replica:
     <<: *postgres-common
